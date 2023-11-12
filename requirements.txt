@@ -1,0 +1,5 @@
+# mongo
+beanie==1.23.2
+# misc
+tqdm
+pydantic>=2.0.0
