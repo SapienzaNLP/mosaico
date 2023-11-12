@@ -8,7 +8,7 @@
 
 ## Using the library
 
-**The library heavily uses async programming. If you cannot integrate that within your code (e.g., inside a torch.Dataset), I suggest using a separate script to download the data locally**.
+> **The library heavily uses async programming.** If you cannot integrate that within your code (e.g., inside a torch.Dataset), I suggest using a separate script to download the data locally.
 
 ```python
 import asyncio
@@ -41,8 +41,9 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
 ```
+
+For more information, check out the *examples/* folder.
 
 ### Demo
 
