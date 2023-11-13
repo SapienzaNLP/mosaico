@@ -164,16 +164,16 @@ class StanzaAnnotationWord(BaseModel):
         return data
 
     async def prepare_with_page(self, page: WikiPage):
-        self.text = self.d[0]
-        self.pos = _idx2pos[self.d[1]]
-        self.morph = "|".join(
+        self._text = self.d[0]
+        self._pos = _idx2pos[self.d[1]]
+        self._morph = "|".join(
             [
                 _morph_decompression[feat] if isinstance(feat, int) else feat
-                for feat in self.d[2].split("|")
+                for feat in self.d[2]
             ]
         )
 
-        self.lemma = self.l
+        self._lemma = self.l
 
 
 class StanzaAnnotationToken(BaseModel):

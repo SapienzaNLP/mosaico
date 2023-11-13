@@ -12,7 +12,6 @@
 
 ```python
 import asyncio
-import os
 from mosaico.schema import init, WikiPage
 
 
@@ -45,7 +44,7 @@ if __name__ == "__main__":
 
 For more information, check out the *examples/* folder.
 
-### Demo
+## Streamlit Demo
 
 ```bash
 export MONGO_URI="mongodb://<your user>:<your password>@<the ip:port where you'll reach Mongo>"
@@ -55,80 +54,4 @@ PYTHONPATH=$(pwd) \
     run \
     src/scripts/demo/main.py \
     --server.headless True
-```
-
-## Working the library
-
-### Spawn the DB
-
-```bash
-# spawn
-mkdir -p data/mongo-db
-docker run \
-    -e MONGO_INITDB_ROOT_USERNAME=<user> \
-    -e MONGO_INITDB_ROOT_PASSWORD=<password> \
-    -v $(pwd)/data/mongo-db/:/data/db \
-    -p 37017:27017 \
-    --name mosaico-db \
-    -d mongo:6.0.11
-
-# create users
-mongosh --authenticationDatabase admin -u <admin-user> -p <admin-pwd>
-
-    use admin
-
-    # create admin
-    db.createUser(
-        { 
-            user: "<user>",
-            pwd: passwordPrompt(),
-            roles: [ 
-                { role: "clusterAdmin", db: "admin" },
-                { role: "readWriteAnyDatabase", db: "admin" }
-            ]
-        }
-    )
-
-    ## create readwriteany user
-    db.createUser(
-        { 
-            user: "<user>",
-            pwd: passwordPrompt(),
-            roles: [
-                { role: "readWriteAnyDatabase", db: "admin" }
-            ]
-        }
-    )
-
-    # create read-only db-specific users
-    db.createUser(
-        { 
-            user: "<user>",
-            pwd: passwordPrompt(),
-            roles: [
-                { role: "read", db: "mosaico" },
-            ]
-        }
-    )
-
-    db.createUser(
-        { 
-            user: "sapnlp-guest",
-            pwd: passwordPrompt(),
-            roles: [
-                { role: "read", db: "mosaico" },
-            ]
-        }
-    )
-
-    # create read-write db-specific users
-    db.createUser(
-        { 
-            user: "<user>",
-            pwd: passwordPrompt(),
-            roles: [
-                { role: "readWrite", db: "mosaico" },
-            ]
-        }
-    )
 ```
