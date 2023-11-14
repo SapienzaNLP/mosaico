@@ -6,9 +6,15 @@
 * Source text linking coverage (impacts on sectioning and wikilinks)
 * Propagations bug on wikilinks
 
+## Installing the library
+
+```bash
+pip install git+https://github.com/SapienzaNLP/mosaico
+```
+
 ## Using the library
 
-> **The library heavily uses async programming.** If you cannot integrate that within your code (e.g., inside a torch.Dataset), I suggest using a separate script to download the data locally.
+> **The library heavily uses async programming.** If you cannot integrate that within your code (e.g., inside a torch.Dataset), I suggest using a separate script to download the data locally. Moreover, we built this project on top of [beanie](https://beanie-odm.dev/), an ODM for Mongo. Before proceeding, we strongly recommend to check out its tutorial, as **WikiPage is a beanie.Document**.
 
 ```python
 import asyncio
