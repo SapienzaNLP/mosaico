@@ -3,12 +3,6 @@ import os
 from mosaico.schema import init, WikiPage, Language
 
 
-async def plain_iter():
-    print("# plain iter:")
-    async for page in WikiPage.find(limit=5):
-        print(f"* {page.title}")
-
-
 async def main():
     await init(
         mongo_uri=os.environ["MONGO_URI"],

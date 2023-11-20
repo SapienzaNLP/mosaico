@@ -1,11 +1,5 @@
 # MoSAICo
 
-
-## Open Issues
-
-* Source text linking coverage (impacts on sectioning and wikilinks)
-* Propagations bug on wikilinks
-
 ## Installing the library
 
 ```bash
@@ -48,7 +42,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-For more information, check out the *examples/* folder.
+For more information, check out the *examples/* folder. If interested in the fields available for each annotation, check out the pyndatic models defined in *src/mosaico/schema/annotations/*.
 
 ## Streamlit Demo
 

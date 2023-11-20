@@ -16,6 +16,7 @@ class RawJSONBodyRenderer(BodyRenderer):
                     language=page.language,
                     title=page.title,
                     text=page.text,
+                    document_id=page.document_id,
                     wikidata_id=page.wikidata_id,
                 ),
                 annotations={

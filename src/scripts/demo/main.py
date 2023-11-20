@@ -1,4 +1,3 @@
-import argparse
 import os
 import asyncio
 from typing import Coroutine
@@ -97,12 +96,6 @@ async def main():
     )
 
     await body_renderer.render(language2page[Language(language)])
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("conf_path")
-    return parser.parse_args()
 
 
 if __name__ == "__main__":
