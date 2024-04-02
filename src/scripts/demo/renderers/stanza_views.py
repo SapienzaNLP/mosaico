@@ -12,6 +12,7 @@ except ModuleNotFoundError:
 
 from mosaico.schema import WikiPage
 from mosaico.schema.annotations.stanza import _pos_classes as pos_classes
+
 from . import BodyRenderer, color_iterator
 
 
@@ -24,14 +25,25 @@ class StanzaBodyRenderer(BodyRenderer):
     def _render_sidebar_kwargs() -> dict:
         shown_pos = st.sidebar.multiselect("Choose displayed POS", pos_classes)
         display_lemma = st.sidebar.checkbox("Display lemma")
-        return dict(shown_pos=shown_pos, display_lemma=display_lemma)
+        display_alignment = st.sidebar.checkbox("Display source alignment")
+        return dict(
+            shown_pos=shown_pos,
+            display_lemma=display_lemma,
+            display_alignment=display_alignment,
+        )
 
-    def __init__(self, shown_pos: list, display_lemma: bool):
+    def __init__(self, shown_pos: list, display_lemma: bool, display_alignment: bool):
         self.shown_pos = set(shown_pos)
         self.display_lemma = display_lemma
+        self.display_alignment = display_alignment
 
     async def _render(self, page: WikiPage):
         stanza_document = (await page.get_annotation("stanza")).document
+        cleaned_source_text = (
+            None
+            if not self.display_alignment
+            else (await page.get_annotation("cirrus")).cleaned_source_text
+        )
 
         for sentence_idx, sentence in enumerate(stanza_document.sentences):
             st.markdown(
@@ -54,6 +66,18 @@ class StanzaBodyRenderer(BodyRenderer):
 
             annotated_text(*tokens)
             annotated_text()
+
+            if self.display_alignment:
+                for token in sentence.tokens:
+                    if token.cleaned_source_text_char_offset is not None:
+                        source_start, source_end = token.cleaned_source_text_char_offset
+                        st.markdown(
+                            f" * [{token.char_start}, {token.char_end}] {token.text} => [{source_start} - {source_end}] {cleaned_source_text[source_start: source_end]}"
+                        )
+                    else:
+                        st.markdown(
+                            f"* :red[[{token.char_start}, {token.char_end}] {token.text}]"
+                        )
 
 
 @BodyRenderer.register("stanza-ner")

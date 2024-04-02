@@ -1,9 +1,10 @@
-from . import BodyRenderer, brighten_color
+import html
+
 import streamlit as st
-
 from annotated_text import annotated_text
-
 from mosaico.schema import WikiPage
+
+from . import BodyRenderer, brighten_color
 
 
 @BodyRenderer.register("wikipage")
@@ -18,45 +19,91 @@ class WikipageBodyRenderer(BodyRenderer):
 
 @BodyRenderer.register("cirrus")
 class CirrusBodyRenderer(BodyRenderer):
+    @staticmethod
+    def _render_sidebar_kwargs() -> dict:
+        show_categories = st.sidebar.checkbox("Show categories")
+        return dict(show_categories=show_categories)
+
+    def __init__(self, show_categories: bool):
+        self.show_categories = show_categories
+
     async def _render(self, page: WikiPage):
-        # write categories
-        st.subheader("Categories")
-        categories = (await page.get_annotation("cirrus")).data["category"]
-        cols = st.columns(3)
-        for i in range(len(categories)):
-            with cols[i % 3]:
-                st.markdown(f"* {categories[i]}")
-        st.markdown("---")
-        # write text
-        st.subheader(page.title)
-        st.write(page.text)
+        if self.show_categories:
+            st.subheader("Categories")
+            categories = (await page.get_annotation("cirrus")).data["category"]
+            cols = st.columns(3)
+            for i in range(len(categories)):
+                with cols[i % 3]:
+                    st.markdown(f"* {categories[i]}")
+            st.markdown("---")
+        st.write(html.escape(page.text))
+
+
+@BodyRenderer.register("source-text")
+class SourceTextRenderer(BodyRenderer):
+    @staticmethod
+    def _render_sidebar_kwargs() -> dict:
+        show_cleaned_text = st.sidebar.checkbox("Show cleaned text")
+        return dict(show_cleaned_text=show_cleaned_text)
+
+    def __init__(self, show_cleaned_text: bool):
+        self.show_cleaned_text = show_cleaned_text
+
+    async def _render(self, page: WikiPage):
+        if self.show_cleaned_text:
+            st.write((await page.get_annotation("cirrus")).cleaned_source_text)
+        else:
+            st.write((await page.get_annotation("cirrus")).source_text)
 
 
 @BodyRenderer.register("section")
 class SectionBodyRenderer(BodyRenderer):
     async def _render(self, page: WikiPage):
-        sentence2section = {}
-
         sectioning_annotation = await page.get_annotation("sectioning")
         stanza_document = (await page.get_annotation("stanza")).document
+        stanza_sentences, i = stanza_document.sentences, 0
 
         for section in sectioning_annotation.sections:
-            for idx in range(section.sentences_span[0], section.sentences_span[1]):
-                sentence2section[idx] = section.name
+            if section.sentence_span is None:
+                continue
 
-        last_section = None
-        for idx, sentence in enumerate(stanza_document.sentences):
-            section = sentence2section.get(idx, None)
-            if section is None:
-                st.markdown(
-                    f"""<p style="color:lightgray">{sentence.text}</p>""",
-                    unsafe_allow_html=True,
+            # re-align
+            while i < section.sentence_span[0]:
+                st.markdown(f":red[{stanza_sentences[i].text}]")
+                i += 1
+
+            st.markdown(f"#{'#' * section.depth} {section.name}")
+
+            for paragraph in section.paragraphs or []:
+                # re-align
+                while i < paragraph.sentence_span[0]:
+                    st.markdown(f":red[{stanza_sentences[i].text}]")
+                    i += 1
+
+                st.write(
+                    " ".join(
+                        [
+                            stanza_sentences[j].text
+                            for j in range(
+                                paragraph.sentence_span[0], paragraph.sentence_span[1]
+                            )
+                        ]
+                    )
+                    + "\n"
                 )
-            else:
-                if section != last_section:
-                    st.write(f"## {section}")
-                    last_section = section
-                st.write(sentence.text)
+                i += paragraph.sentence_span[1] - paragraph.sentence_span[0]
+
+            # re-align
+            while i < section.sentence_span[1]:
+                st.markdown(f":red[{stanza_sentences[i].text}]")
+                i += 1
+
+            st.markdown("---")
+
+        # re-align
+        while i < len(stanza_sentences):
+            st.markdown(f":red[{stanza_sentences[i].text}]")
+            i += 1
 
 
 @BodyRenderer.register("wikilinks")
@@ -82,7 +129,7 @@ class WikilinkBodyRenderer(BodyRenderer):
             document_tokens.append(sentence_tokens)
 
         wikilinks_to_apply = []
-        for pw in wikilinks_annotation.projected_wikilinks:
+        for pw in wikilinks_annotation.wikilinks:
             title = pw.title
             color = self.get_color(pw.title)
             brightened_color = "#" + brighten_color(color[1:], factor=0.75)
