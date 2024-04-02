@@ -1,8 +1,9 @@
 import asyncio
 import os
-from mosaico.schema import init, WikiPage, Language
-from pydantic import BaseModel
 from typing import Optional
+
+from mosaico.schema import Language, WikiPage, init
+from pydantic import BaseModel
 
 
 class ProjectionModel(BaseModel):

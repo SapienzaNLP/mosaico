@@ -1,12 +1,12 @@
+from typing import Any, ClassVar
+
 from beanie import Document
 from pydantic import (
     BaseModel,
-    field_validator,
     ValidationInfo,
+    field_validator,
 )
 from pymongo import IndexModel
-
-from typing import ClassVar, Any
 
 
 class Annotation(BaseModel):

@@ -1,6 +1,7 @@
 import asyncio
 import os
-from mosaico.schema import init, WikiPage
+
+from mosaico.schema import Language, WikiPage, init
 
 
 async def main():
@@ -9,7 +10,10 @@ async def main():
         db="mosaico",
     )
 
-    page = await WikiPage.find_one(WikiPage.title == "Barack Obama")
+    page = await WikiPage.find_one(
+        WikiPage.language == Language.EN, WikiPage.title == "Barack Obama"
+    )
+
     print(f"# document id: {page.document_id}")
     print(
         f"# wikidata id: {page.wikidata_id if page.wikidata_id is not None else '<not available>'}"

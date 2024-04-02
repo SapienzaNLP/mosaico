@@ -1,5 +1,7 @@
 from typing import ClassVar
+
 from pydantic import BaseModel
+
 from .base import Annotation
 
 

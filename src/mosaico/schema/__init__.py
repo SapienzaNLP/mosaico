@@ -1,27 +1,30 @@
-from motor.motor_asyncio import AsyncIOMotorClient as _AsyncIOMotorClient
 from beanie import init_beanie as _init_beanie
+from motor.motor_asyncio import AsyncIOMotorClient as _AsyncIOMotorClient
+
 from .annotations import (
     Annotation,  # noqa
-    MaterializedAnnotationContainer,  # noqa
-    LinkedAnnotationContainer,  # noqa
     CirrusAnnotation,  # noqa
+    LinkedAnnotationContainer,  # noqa
+    MaterializedAnnotationContainer,  # noqa
+    MissedWikilink,  # noqa
+    Paragraph,  # noqa
+    PredArgStructure,  # noqa
+    ProjectedWikilink,  # noqa
+    Section,  # noqa
+    SectioningAnnotation,  # noqa
+    SRLAnnotation,  # noqa
     StanzaAnnotation,  # noqa
     StanzaAnnotationDocument,  # noqa
     StanzaAnnotationSentence,  # noqa
     StanzaAnnotationToken,  # noqa
     StanzaAnnotationWord,  # noqa
-    SectioningAnnotation,  # noqa
-    Section,  # noqa
+    Wikilink,  # noqa
     WikilinksAnnotation,  # noqa
-    MissedWikilink,  # noqa
-    ProjectedWikilink,  # noqa
     WSDAnnotation,  # noqa
     WSDSpanAnnotation,  # noqa
-    SRLAnnotation,  # noqa
-    PredArgStructure,  # noqa
 )
 from .interlanguage_link import InterlanguageLink, Language  # noqa
-from .wikipage import WikiPage  # noqa
+from .wikipage import ProjectedWikiPageModel_LanguageTitleType, WikiPage  # noqa
 
 
 async def init(mongo_uri, db, write_user: bool = False):

@@ -1,9 +1,42 @@
-from typing import ClassVar
+from typing import ClassVar, Optional
+
 from pydantic import BaseModel, model_validator
-from .base import Annotation
-from typing import Optional
-from functools import lru_cache
+
 from ..wikipage import WikiPage
+from .base import Annotation
+
+_pos2score = {
+    "ADJ": 1,
+    "ADP": 0,
+    "ADV": 1,
+    "CCONJ": 0,
+    "DET": 0,
+    "INTJ": 0,
+    "NOUN": 3,
+    "NUM": 0,
+    "PART": 0,
+    "PRON": 0,
+    "PUNCT": 0,
+    "SCONJ": 0,
+    "SYM": 0,
+    "VERB": 2,
+    "X": 1,
+}
+
+
+def multipos_to_pos(pos_s: list[str]) -> str:
+    transformations = {"AUX": "VERB", "PROPN": "NOUN"}
+    pos_s = [transformations.get(pos, pos) for pos in pos_s]
+    if len(pos_s) == 1 or len(set(pos_s)) == 1:
+        return pos_s[0]
+    else:
+        if "NOUN" in pos_s:
+            return "NOUN"
+        elif "VERB" in pos_s:
+            return "VERB"
+        else:
+            return max(pos_s, key=lambda x: _pos2score[x])
+
 
 _pos_classes = [
     "ADJ",
@@ -180,6 +213,9 @@ class StanzaAnnotationToken(BaseModel):
     d: tuple[tuple[int, int], int, list[list[str | int]]]  # char span, pos_, morph_
     e: Optional[dict] = None  # extras
     w: Optional[list[StanzaAnnotationWord]] = None  # words
+    c: Optional[tuple[int, int]] = (
+        None  # char mapping relative to cleaned source text in cirrus annotation
+    )
 
     @property
     def char_start(self) -> int:
@@ -223,6 +259,10 @@ class StanzaAnnotationToken(BaseModel):
     def words(self) -> Optional[list[StanzaAnnotationWord]]:
         return self.w
 
+    @property
+    def cleaned_source_text_char_offset(self) -> Optional[tuple[int, int]]:
+        return self.c
+
     @model_validator(mode="before")
     def handle_compression(cls, data: dict) -> dict:
         if "d" not in data:
@@ -247,6 +287,7 @@ class StanzaAnnotationToken(BaseModel):
             )
             data["e"] = extras if len(extras) > 0 else None
             data["w"] = data.get("words", None)
+            data["c"] = data.get("cleaned_source_text_char_offset", None)
 
         return data
 

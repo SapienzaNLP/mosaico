@@ -1,9 +1,13 @@
 from .base import (
     Annotation,
-    MaterializedAnnotationContainer,
     LinkedAnnotationContainer,
-)  # noqa
+    MaterializedAnnotationContainer,
+)
+
+# noqa
 from .cirrus import CirrusAnnotation  # noqa
+from .sectioning import Paragraph, Section, SectioningAnnotation  # noqa
+from .srl import PredArgStructure, SRLAnnotation  # noqa
 from .stanza import (
     StanzaAnnotation,  # noqa
     StanzaAnnotationDocument,  # noqa
@@ -11,7 +15,10 @@ from .stanza import (
     StanzaAnnotationToken,  # noqa
     StanzaAnnotationWord,  # noqa
 )
-from .sectioning import SectioningAnnotation, Section  # noqa
-from .srl import SRLAnnotation, PredArgStructure  # noqa
-from .wikilinks import WikilinksAnnotation, MissedWikilink, ProjectedWikilink  # noqa
+from .wikilinks import (  # noqa
+    MissedWikilink,
+    ProjectedWikilink,
+    Wikilink,
+    WikilinksAnnotation,
+)
 from .wsd import WSDAnnotation, WSDSpanAnnotation  # noqa

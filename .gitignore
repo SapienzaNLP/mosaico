@@ -155,6 +155,11 @@ cython_debug/
 # custom stuff
 .vscode/
 .idea/
+
+.pdm-build
+.pdm-python
+pdm.toml
+
+.creds
 data/*
 !data/.placeholder
-credentials.txt

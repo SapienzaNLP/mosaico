@@ -1,6 +1,7 @@
 import asyncio
 import os
-from mosaico.schema import init, WikiPage
+
+from mosaico.schema import Language, WikiPage, init
 
 
 async def main():
