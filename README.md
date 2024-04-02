@@ -102,7 +102,7 @@ pdm install
 
 ### Patch WikiExtractor
 
-We use an alignment algorithm to link the Cirrus text (which **does** not contain metadata such as sections and links) to the standard Wikipedia source text (which **does**).
+We use an alignment algorithm to link the Cirrus text (which **does not** contain metadata such as sections and links) to the standard Wikipedia source text (which **does**).
 
 In this process, we compute a cleaned more-easily-alignable version of the source text by applying [wikiextractor](https://github.com/attardi/wikiextractor). For best results,
 we recommend correcting (i.e., patching) the installed version of wikiextractor by updating the following lines in *wikiextractor.extract:clean*:
