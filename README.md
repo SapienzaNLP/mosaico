@@ -126,4 +126,4 @@ This is the **cleaned** text returned by the original unpatched function: the tr
 More details on the linking process can be found in *src/scripts/annotations/source_text_linking/link.py*.
 
 ## License
-The data is licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+The data is licensed under [Creative Commons Attribution-ShareAlike-NonCommercial 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
