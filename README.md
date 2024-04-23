@@ -9,7 +9,7 @@
 </div>
 
 ## About MOSAICo
-This is the repository for the paper [*MOSAICo: a Multilingual Open-text Semantically Annotated Interlinked Corpus*](), presented at NAACL 2024 by [Simone Conia](https://c-simone.github.io/), Edoardo Barba, Abelardo Carlos Martinez Lorenzo, Pere-Lluis Huguet Cabot, [Riccardo Orlando](https://riccardorlando.xyz/), [Luigi Procopio](https://poccio.github.io/) and [Roberto Navigli](https://www.diag.uniroma1.it/navigli/).
+This is the repository for the paper [*MOSAICo: a Multilingual Open-text Semantically Annotated Interlinked Corpus*](), presented at NAACL 2024 by [Simone Conia](https://c-simone.github.io/), [Edoardo Barba](https://edobobo.github.io/), Abelardo Carlos Martinez Lorenzo, Pere-Lluís Huguet Cabot, [Riccardo Orlando](https://riccardorlando.xyz/), [Luigi Procopio](https://poccio.github.io/) and [Roberto Navigli](https://www.diag.uniroma1.it/navigli/).
 
 ## Abstract
 Several Natural Language Understanding (NLU) tasks focus on linking text to explicit knowledge, including Word Sense Disambiguation, Semantic Role Labeling, Semantic Parsing, and Relation Extraction.
