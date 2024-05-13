@@ -28,6 +28,31 @@ async def main():
     async for page in WikiPage.find({"is_mosaico_core": True}, limit=5):
         print(f"  * {page.title}")
 
+    print(
+        "# iterate on all pages in English that contain WSD annotations, printing the title of the first five of them:"
+    )
+    async for page in WikiPage.find(
+        WikiPage.language == "en",
+        {"materialized_annotations.name": "wsd"},
+        limit=5,
+    ):
+        print(f"  * {page.title}")
+
+    print(
+        "# iterate on all pages in English that contain either WSD or SRL annotations, printing the title of the first five of them:"
+    )
+    async for page in WikiPage.find(
+        WikiPage.language == "en",
+        {
+            "$or": [
+                {"materialized_annotations.name": "srl"},
+                {"materialized_annotations.name": "wsd"},
+            ]
+        },
+        limit=5,
+    ):
+        print(f"  * {page.title}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
