@@ -34,6 +34,13 @@ If you use any part of this work, please consider citing the paper as follows:
 }
 ```
 
+## How is MOSAICo built?
+MOSAICo provides high-quality silver annotations for 4 semantic tasks:
+* **Word Sense Disambiguation:** we use [ESCHER](https://github.com/SapienzaNLP/esc), a state-of-the-art WSD system adapted for multilingual settings.
+* **Semantic Role Labeling:** we use [Multi-SRL](https://github.com/SapienzaNLP/multi-srl), a state-of-the-art multilingual system for dependency- and span-based SRL.
+* **Semantic Parsing:** we use [SPRING](https://github.com/SapienzaNLP/spring), a state-of-the-art semantic parser adapted for multilingual settings.
+* **Relation Extraction:** we use [mREBEL](https://github.com/Babelscape/rebel?tab=readme-ov-file#REDFM), a state-of-the-art system for multilingual RE.
+
 ## Installing the MOSAICo library
 
 ```bash
