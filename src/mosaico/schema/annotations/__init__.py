@@ -1,11 +1,11 @@
+from .amr import AMRAnnotation, AMRGraph  # noqa
 from .base import (
-    Annotation,
-    LinkedAnnotationContainer,
-    MaterializedAnnotationContainer,
+    Annotation,  # noqa
+    LinkedAnnotationContainer,  # noqa
+    MaterializedAnnotationContainer,  # noqa
 )
-
-# noqa
 from .cirrus import CirrusAnnotation  # noqa
+from .rel_ex import REAnnotation, RETriple  # noqa
 from .sectioning import Paragraph, Section, SectioningAnnotation  # noqa
 from .srl import PredArgStructure, SRLAnnotation  # noqa
 from .stanza import (

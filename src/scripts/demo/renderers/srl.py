@@ -1,9 +1,8 @@
-from . import BodyRenderer, brighten_color
 import streamlit as st
-
 from annotated_text import annotated_text
-
 from mosaico.schema import WikiPage
+
+from . import BodyRenderer, brighten_color
 
 
 @BodyRenderer.register("srl")
@@ -20,7 +19,7 @@ class SRLBodyRenderer(BodyRenderer):
         try:
             srl_annotation = await page.get_annotation("srl")
         except KeyError:
-            st.write('Annotation "wsd" missing. Check out json')
+            st.write('Annotation "srl" missing. Check out json')
             return
 
         stanza_document = (await page.get_annotation("stanza")).document

@@ -142,7 +142,12 @@ class WikiPage(Document):
 
         for page_link in interlanguage_link.page_links:
             if page_link.language != self.language:
-                yield await WikiPage.get(page_link.page_id)
+                translated_page = await WikiPage.get(page_link.page_id)
+                if translated_page is None:
+                    logging.warning(
+                        f"following interlanguage link gave a null page (None) for language {page_link.language}. This is unexpected, may result in exceptions later on and is likely an issue in the DB"
+                    )
+                yield translated_page
 
     class Config:
         arbitrary_types_allowed = True

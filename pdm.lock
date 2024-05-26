@@ -5,7 +5,7 @@
 groups = ["default", "demo", "build"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:5732c253b2256f3e9fc99c86cee12d590d85b0915d196e83d53026e23de0f411"
+content_hash = "sha256:af63faf5be1f7cfdc1a09619958bb9ea032d304a02d31cf337a72aa78d7641aa"
 
 [[package]]
 name = "altair"
@@ -534,6 +534,17 @@ files = [
     {file = "pandas-2.2.1-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:11940e9e3056576ac3244baef2fedade891977bcc1cb7e5cc8f8cc7d603edc89"},
     {file = "pandas-2.2.1-cp312-cp312-win_amd64.whl", hash = "sha256:4acf681325ee1c7f950d058b05a820441075b0dd9a2adf5c4835b9bc056bf4fb"},
     {file = "pandas-2.2.1.tar.gz", hash = "sha256:0ab90f87093c13f3e8fa45b48ba9f39181046e8f3317d3aadb2fffbb1b978572"},
+]
+
+[[package]]
+name = "penman"
+version = "1.3.0"
+requires_python = ">=3.8"
+summary = "PENMAN notation for graphs (e.g., AMR)"
+groups = ["build"]
+files = [
+    {file = "penman-1.3.0-py3-none-any.whl", hash = "sha256:00665ba0bd8507e05e5327bbe303f4327672762b21d5c58ad7a9f70c27cf64a2"},
+    {file = "penman-1.3.0.tar.gz", hash = "sha256:efdaf3b10dd54220318b3b8948c5b36114cf8718cb6eb67fa0f32dbb3515c2bf"},
 ]
 
 [[package]]

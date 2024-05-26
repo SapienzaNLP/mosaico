@@ -11,7 +11,7 @@ async def main():
     )
 
     page = await WikiPage.find_one(
-        WikiPage.language == Language.EN, WikiPage.title == "Barack Obama"
+        WikiPage.language == Language.EN, WikiPage.title == "Velites"
     )
 
     stanza_document = (await page.get_annotation("stanza")).document

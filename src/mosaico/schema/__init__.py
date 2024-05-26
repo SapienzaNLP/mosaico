@@ -2,6 +2,8 @@ from beanie import init_beanie as _init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient as _AsyncIOMotorClient
 
 from .annotations import (
+    AMRAnnotation,  # noqa
+    AMRGraph,  # noqa
     Annotation,  # noqa
     CirrusAnnotation,  # noqa
     LinkedAnnotationContainer,  # noqa
@@ -10,6 +12,8 @@ from .annotations import (
     Paragraph,  # noqa
     PredArgStructure,  # noqa
     ProjectedWikilink,  # noqa
+    REAnnotation,  # noqa
+    RETriple,  # noqa
     Section,  # noqa
     SectioningAnnotation,  # noqa
     SRLAnnotation,  # noqa

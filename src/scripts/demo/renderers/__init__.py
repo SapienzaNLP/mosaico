@@ -1,8 +1,9 @@
 import random
+from enum import Enum
 from typing import Type
+
 import streamlit as st
 from mosaico.schema import WikiPage
-
 
 colors_md_200 = [
     "#EF9A9A",
@@ -22,9 +23,9 @@ colors_md_200 = [
     "#FFCC80",
     "#FFAB91",
     "#BCAAA4",
-    "#EEEEEE",
-    "#B0BBC5",
 ]
+
+color_material_gray = "#EEEEEE"
 
 
 def color_iterator():
@@ -89,7 +90,8 @@ class BodyRenderer:
     def _render_sidebar_kwargs() -> dict:
         return {}
 
-    def get_color(self, label):
+    @classmethod
+    def get_color(cls, label):
         if label not in BodyRenderer.label2color:
             try:
                 BodyRenderer.label2color[label] = next(BodyRenderer.color_it)
@@ -99,6 +101,10 @@ class BodyRenderer:
                 )
 
         return BodyRenderer.label2color[label]
+
+    @classmethod
+    def get_gray_color(cls):
+        return color_material_gray
 
     async def render(self, page: WikiPage):
         st.write(f"# [{page.title}]({page.link})")
@@ -113,3 +119,5 @@ from .raw import RawJSONBodyRenderer  # noqa
 from .stanza_views import StanzaBodyRenderer, StanzaNERBodyRenderer  # noqa
 from .wsd import WSDBodyRenderer  # noqa
 from .srl import SRLBodyRenderer  # noqa
+from .rel_ex import REBodyRenderer  # noqa
+from .amr import AMRBodyRenderer  # noqa

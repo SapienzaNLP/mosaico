@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-from mosaico.schema import WikiPage, init
+from mosaico.schema import Language, WikiPage, init
 
 
 async def main():
@@ -10,7 +10,9 @@ async def main():
         db="mosaico",
     )
 
-    page = await WikiPage.find_one(WikiPage.title == "Barack Obama")
+    page = await WikiPage.find_one(
+        WikiPage.language == Language.EN, WikiPage.title == "Velites"
+    )
 
     stanza_document = (await page.get_annotation("stanza")).document
     srl_annotation = await page.get_annotation("srl")

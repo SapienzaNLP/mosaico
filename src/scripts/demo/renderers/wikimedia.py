@@ -2,7 +2,7 @@ import html
 
 import streamlit as st
 from annotated_text import annotated_text
-from mosaico.schema import WikiPage
+from mosaico.schema import Wikilink, WikiPage
 
 from . import BodyRenderer, brighten_color
 
@@ -111,10 +111,26 @@ class WikilinkBodyRenderer(BodyRenderer):
     @staticmethod
     def _render_sidebar_kwargs() -> dict:
         show_propagations = st.sidebar.checkbox("Show propagations")
-        return dict(show_propagations=show_propagations)
+        show_link = st.sidebar.selectbox(
+            "Select label type", options=["Title", "Wikidata", "BabelNet", "WordNet"]
+        )
+        return dict(show_propagations=show_propagations, show_link=show_link)
 
-    def __init__(self, show_propagations: bool):
+    def __init__(self, show_propagations: bool, show_link: bool):
         self.show_propagations = show_propagations
+        self.show_link = show_link
+
+    def _format_title(self, wikilink: Wikilink) -> str | None:
+        if self.show_link == "Title":
+            return wikilink.title
+        elif self.show_link == "Wikidata":
+            return wikilink.wikidata_id if wikilink.wikidata_id is not None else None
+        elif self.show_link == "BabelNet":
+            return wikilink.bn_id if wikilink.bn_id is not None else None
+        elif self.show_link == "WordNet":
+            return wikilink.wn_id if wikilink.wn_id is not None else None
+        else:
+            raise ValueError
 
     async def _render(self, page: WikiPage):
         wikilinks_annotation = await page.get_annotation("wikilinks")
@@ -130,13 +146,29 @@ class WikilinkBodyRenderer(BodyRenderer):
 
         wikilinks_to_apply = []
         for pw in wikilinks_annotation.wikilinks:
-            title = pw.title
-            color = self.get_color(pw.title)
+            title = self._format_title(pw)
+            color = (
+                self.get_color(title) if title is not None else self.get_gray_color()
+            )
             brightened_color = "#" + brighten_color(color[1:], factor=0.75)
-            wikilinks_to_apply.append((pw.sentence_idx, pw.token_span, pw.title, color))
+            wikilinks_to_apply.append(
+                (
+                    pw.sentence_idx,
+                    pw.token_span,
+                    title if title is not None else "∅",
+                    color,
+                )
+            )
             if self.show_propagations and pw.propagated_spans is not None:
                 for ps in pw.propagated_spans:
-                    wikilinks_to_apply.append((ps[0], ps[1], title, brightened_color))
+                    wikilinks_to_apply.append(
+                        (
+                            ps[0],
+                            ps[1],
+                            title if title is not None else "∅",
+                            brightened_color,
+                        )
+                    )
 
         wikilinks_to_apply = sorted(
             wikilinks_to_apply, key=lambda x: (x[0], x[1][0]), reverse=True

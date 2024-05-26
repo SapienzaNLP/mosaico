@@ -19,8 +19,11 @@ async def main():
     )
 
     page = await WikiPage.find_one(
-        WikiPage.title == "Barack Obama", projection_model=ProjectionModel
+        WikiPage.language == Language.EN,
+        WikiPage.title == "Velites",
+        projection_model=ProjectionModel,
     )
+
     print(f"# document id: {page.document_id}")
     print(
         f"# wikidata id: {page.wikidata_id if page.wikidata_id is not None else '<not available>'}"

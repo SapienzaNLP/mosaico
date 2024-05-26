@@ -1,8 +1,7 @@
 import streamlit as st
-
 from annotated_text import annotated_text
-
 from mosaico.schema import WikiPage
+
 from . import BodyRenderer
 
 
@@ -142,6 +141,7 @@ class WSDBodyRenderer(BodyRenderer):
 
         st.markdown("---")
 
+        # TODO not handling english labels which right now are wordnet labels
         st.components.v1.iframe(
             f"https://babelnet.org/synset?id={highlighted_label}&lang=EN",
             height=600,

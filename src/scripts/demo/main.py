@@ -71,7 +71,11 @@ async def main():
     # get a bunch of titles and pages
     titles = []
     async for projected_page in (
-        WikiPage.find({"is_mosaico_core": True})
+        WikiPage.find(
+            {
+                "is_mosaico_core": True,
+            }
+        )
         .project(ProjectedWikiPageModel_LanguageTitleType)
         .limit(1_000)
     ):

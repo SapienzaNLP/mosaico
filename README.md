@@ -41,15 +41,65 @@ MOSAICo provides high-quality silver annotations for 4 semantic tasks:
 * **Semantic Parsing:** we use [SPRING](https://github.com/SapienzaNLP/spring), a state-of-the-art semantic parser adapted for multilingual settings.
 * **Relation Extraction:** we use [mREBEL](https://github.com/Babelscape/rebel?tab=readme-ov-file#REDFM), a state-of-the-art system for multilingual RE.
 
-## Installing the MOSAICo library
+## Usage
+
+### Set up MongoDB
+
+MOSAICo data are released as *mongoexported* JSON files that can be loaded into a local instance of MongoDB.
+
+First, we need to start a local MongoDB instance (we suggest using Docker):
+```bash
+docker run \
+  -e MONGO_INITDB_ROOT_USERNAME=admin \
+  -e MONGO_INITDB_ROOT_PASSWORD=password \
+  -p 27017:27017 \
+  --name local-mosaico-db \
+  --detach \
+  mongo:6.0.11
+```
+
+Then, we need to *mongoimport* the data corresponding to three collections.
+| Collection | Sample | Full |
+| --- | --- | --- |
+| interlanguage-links | - | - |
+| pages | | - |
+| annotations | | - |
+
+> The *Sample* column refers to **an English-only sample of 835 annotated documents**. We are finalizing the last details on the entire multilingual release, which will soon be available.
+
+Once downloaded, you can import the data into the local MongoDB instance.
+```bash
+# import interlanguage links
+docker exec -i local-mosaico-db \
+    mongoimport \
+    --authenticationDatabase admin -u admin -p password \
+    --db mosaico --collection interlanguage-links < <path-to-interlanguage-links.collection.json>
+
+
+# import pages
+docker exec -i local-mosaico-db \
+    mongoimport \
+    --authenticationDatabase admin -u admin -p password \
+    --db mosaico --collection pages < data/dump/sample/pages.collection.json
+
+
+# import annotations
+docker exec -i local-mosaico-db \
+    mongoimport \
+    --authenticationDatabase admin -u admin -p password \
+    --db mosaico --collection annotations < data/dump/sample/annotations.collection.json
+```
+
+
+### Installing the MOSAICo library
 
 ```bash
 pip install git+https://github.com/SapienzaNLP/mosaico
 ```
 
-## Using the MOSAICo library
+### Using the MOSAICo library
 
-> **The library heavily uses async programming.** If you cannot integrate that within your code (e.g., inside a torch.Dataset), I suggest using a separate script to download the data locally. Moreover, we built this project on top of [beanie](https://beanie-odm.dev/), an ODM for Mongo. Before proceeding, we strongly recommend to check out its tutorial, as **WikiPage is a beanie.Document**.
+> **The library heavily uses async programming.** If you cannot integrate that within your code (e.g., inside a torch.Dataset), I suggest using a separate script to download the data locally. Moreover, we built this project on top of [beanie](https://beanie-odm.dev/), an ODM for MongoDB. Before proceeding, we strongly recommend to check out its tutorial, as **WikiPage is a beanie.Document**.
 
 ```python
 import asyncio
@@ -58,7 +108,7 @@ from mosaico.schema import init, WikiPage
 
 async def main():
     await init(
-        mongo_uri="mongodb://<your user>:<your password>@<the ip:port where you'll reach Mongo>",
+        mongo_uri="mongodb://admin:password@127.0.0.1:27017/",
         db="mosaico",
     )
 
@@ -85,7 +135,7 @@ if __name__ == "__main__":
 
 For more information, check out the *examples/* folder. If interested in the fields available for each annotation, check out the pydantic models defined in *src/mosaico/schema/annotations/*.
 
-## Streamlit Demo
+### Streamlit Demo
 
 This code includes a script to run a streamlit demo that allows for easy data visualization.
 

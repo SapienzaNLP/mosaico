@@ -10,7 +10,9 @@ async def main():
         db="mosaico",
     )
 
-    page = await WikiPage.find_one(WikiPage.title == "Barack Obama")
+    page = await WikiPage.find_one(
+        WikiPage.language == Language.EN, WikiPage.title == "Velites"
+    )
 
     stanza_document = (await page.get_annotation("stanza")).document
     for token in stanza_document.sentences[0].tokens:
