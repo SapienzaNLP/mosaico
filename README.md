@@ -61,9 +61,9 @@ docker run \
 Then, we need to *mongoimport* the data corresponding to three collections.
 | Collection | Sample | Full |
 | --- | --- | --- |
-| interlanguage-links | - | - |
-| pages | | - |
-| annotations | | - |
+| interlanguage-links | - | [link](https://drive.google.com/file/d/1pAWoSwf-xiXZZvK4SQMRADIg2zu_Ua1P/view?usp=sharing) |
+| pages | [link](https://drive.google.com/file/d/1ZiFeG0sx3rfNS-JQsEIBzAWW1JfLF0Vy/view?usp=sharing) | - |
+| annotations | [link](https://drive.google.com/file/d/12equcYN_u06P0HGQILPFDr2ixMAD0v2H/view?usp=sharing) | - |
 
 > The *Sample* column refers to **an English-only sample of 835 annotated documents**. We are finalizing the last details on the entire multilingual release, which will soon be available.
 
