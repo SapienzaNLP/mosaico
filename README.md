@@ -80,14 +80,14 @@ docker exec -i local-mosaico-db \
 docker exec -i local-mosaico-db \
     mongoimport \
     --authenticationDatabase admin -u admin -p password \
-    --db mosaico --collection pages < data/dump/sample/pages.collection.json
+    --db mosaico --collection pages < <path-to-pages.collection.json>
 
 
 # import annotations
 docker exec -i local-mosaico-db \
     mongoimport \
     --authenticationDatabase admin -u admin -p password \
-    --db mosaico --collection annotations < data/dump/sample/annotations.collection.json
+    --db mosaico --collection annotations < <path-to-annotations.collection.json>
 ```
 
 
