@@ -2,6 +2,8 @@
     
 # MOSAICo:</br>A Multilingual Open-text Semantically Annotated Interlinked Corpus
 
+![1718634923466](https://github.com/SapienzaNLP/mosaico/assets/26126169/613fb6e9-e7f6-4683-87c9-73f0f359a5c3)
+
 [![Conference](http://img.shields.io/badge/NAACL-2024-4b44ce.svg)](https://2024.naacl.org/)
 [![Paper](http://img.shields.io/badge/paper-ACL--anthology-B31B1B.svg)]()
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -181,6 +183,34 @@ This is the **cleaned** text returned by the original unpatched function: the tr
 
 
 More details on the linking process can be found in *src/scripts/annotations/source_text_linking/link.py*.
+
+## Cite this work
+
+If you use any part of this work, please consider citing the paper as follows:
+
+```bibtex
+@inproceedings{conia-etal-2024-mosaico,
+    title = "{MOSAIC}o: a Multilingual Open-text Semantically Annotated Interlinked Corpus",
+    author = "Conia, Simone  and
+      Barba, Edoardo  and
+      Martinez Lorenzo, Abelardo Carlos  and
+      Huguet Cabot, Pere-Llu{\'\i}s  and
+      Orlando, Riccardo  and
+      Procopio, Luigi  and
+      Navigli, Roberto",
+    editor = "Duh, Kevin  and
+      Gomez, Helena  and
+      Bethard, Steven",
+    booktitle = "Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)",
+    month = jun,
+    year = "2024",
+    address = "Mexico City, Mexico",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.naacl-long.442",
+    pages = "7983--7997",
+    abstract = "Several Natural Language Understanding (NLU) tasks focus on linking text to explicit knowledge, including Word Sense Disambiguation, Semantic Role Labeling, Semantic Parsing, and Relation Extraction. In addition to the importance of connecting raw text with explicit knowledge bases, the integration of such carefully curated knowledge into deep learning models has been shown to be beneficial across a diverse range of applications, including Language Modeling and Machine Translation. Nevertheless, the scarcity of semantically-annotated corpora across various tasks and languages limits the potential advantages significantly. To address this issue, we put forward MOSAICo, the first endeavor aimed at equipping the research community with the key ingredients to model explicit semantic knowledge at a large scale, providing hundreds of millions of silver yet high-quality annotations for four NLU tasks across five languages. We describe the creation process of MOSAICo, demonstrate its quality and variety, and analyze the interplay between different types of semantic information. MOSAICo, available at https://github.com/SapienzaNLP/mosaico, aims to drop the requirement of closed, licensed datasets and represents a step towards a level playing field across languages and tasks in NLU.",
+}
+```
 
 ## License
 The data is licensed under [Creative Commons Attribution-ShareAlike-NonCommercial 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
