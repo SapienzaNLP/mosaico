@@ -69,7 +69,7 @@ Then, we need to *mongoimport* the data corresponding to three collections.
 | pages | [link](https://drive.google.com/file/d/1ZiFeG0sx3rfNS-JQsEIBzAWW1JfLF0Vy/view?usp=sharing) | [link](https://drive.google.com/file/d/1xetcd2-gBa0VIJTONbeOGFPx9LGkPHCl/view?usp=sharing) |
 | annotations | [link](https://drive.google.com/file/d/12equcYN_u06P0HGQILPFDr2ixMAD0v2H/view?usp=sharing) | [link](https://drive.google.com/file/d/1odu56ATenx-v9ICSMs8w8OXwy-uScF5_/view?usp=sharing) |
 
-> The *Sample* column refers to **an English-only sample of 835 annotated documents**. We are finalizing the last details on the entire multilingual release, which will soon be available.
+> The *Sample* column refers to **an English-only sample of 835 annotated documents**.
 
 Once downloaded, you can import the data into the local MongoDB instance.
 ```bash
